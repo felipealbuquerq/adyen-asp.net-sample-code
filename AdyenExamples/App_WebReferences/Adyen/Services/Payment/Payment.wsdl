@@ -9,20 +9,13 @@
           <xsd:element minOccurs="0" name="additionalData" nillable="true" type="tns:anyType2anyTypeMap" />
           <xsd:element minOccurs="0" name="amount" nillable="true" type="ns1:Amount" />
           <xsd:element minOccurs="0" name="bankAccount" nillable="true" type="tns:BankAccount" />
-          <xsd:element minOccurs="0" name="billingAddress" nillable="true" type="ns1:Address" />
           <xsd:element minOccurs="0" name="browserInfo" nillable="true" type="ns1:BrowserInfo" />
-          <xsd:element minOccurs="0" name="captureDelayHours" nillable="true" type="xsd:int" />
           <xsd:element minOccurs="0" name="card" nillable="true" type="tns:Card" />
-          <xsd:element minOccurs="0" name="dateOfBirth" nillable="true" type="xsd:dateTime" />
           <xsd:element minOccurs="0" name="dccQuote" nillable="true" type="tns:ForexQuote" />
           <xsd:element minOccurs="0" name="deliveryAddress" nillable="true" type="ns1:Address" />
-          <xsd:element minOccurs="0" name="deliveryDate" nillable="true" type="xsd:dateTime" />
-          <xsd:element minOccurs="0" name="deviceFingerprint" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="elv" nillable="true" type="tns:ELV" />
           <xsd:element minOccurs="0" name="fraudOffset" nillable="true" type="xsd:int" />
-          <xsd:element minOccurs="0" name="installments" nillable="true" type="ns1:Installments" />
-          <xsd:element minOccurs="0" name="mcc" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="merchantAccount" nillable="true" type="xsd:string" />
-          <xsd:element minOccurs="0" name="merchantOrderReference" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="mpiData" nillable="true" type="tns:ThreeDSecureData" />
           <xsd:element minOccurs="0" name="orderReference" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="recurring" nillable="true" type="tns:Recurring" />
@@ -33,12 +26,8 @@
           <xsd:element minOccurs="0" name="shopperEmail" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="shopperIP" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="shopperInteraction" nillable="true" type="xsd:string" />
-          <xsd:element minOccurs="0" name="shopperLocale" nillable="true" type="xsd:string" />
-          <xsd:element minOccurs="0" name="shopperName" nillable="true" type="ns1:Name" />
           <xsd:element minOccurs="0" name="shopperReference" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="shopperStatement" nillable="true" type="xsd:string" />
-          <xsd:element minOccurs="0" name="socialSecurityNumber" nillable="true" type="xsd:string" />
-          <xsd:element minOccurs="0" name="telephoneNumber" nillable="true" type="xsd:string" />
         </xsd:sequence>
       </xsd:complexType>
       <xsd:complexType name="BalanceCheckResult">
@@ -71,6 +60,7 @@
       <xsd:complexType name="Card">
         <xsd:sequence>
           <xsd:element minOccurs="0" name="billingAddress" nillable="true" type="ns1:Address" />
+          <xsd:element minOccurs="0" name="brand" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="cvc" nillable="true">
             <xsd:simpleType>
               <xsd:restriction base="xsd:string">
@@ -137,6 +127,48 @@
           </xsd:element>
         </xsd:sequence>
       </xsd:complexType>
+      <xsd:complexType name="DirectDebitRequest">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="additionalAmount" nillable="true" type="ns1:Amount" />
+          <xsd:element minOccurs="0" name="additionalData" nillable="true" type="tns:anyType2anyTypeMap" />
+          <xsd:element minOccurs="0" name="amount" nillable="true" type="ns1:Amount" />
+          <xsd:element minOccurs="0" name="bankAccount" nillable="true" type="tns:BankAccount" />
+          <xsd:element minOccurs="0" name="browserInfo" nillable="true" type="ns1:BrowserInfo" />
+          <xsd:element minOccurs="0" name="dccQuote" nillable="true" type="tns:ForexQuote" />
+          <xsd:element minOccurs="0" name="deliveryAddress" nillable="true" type="ns1:Address" />
+          <xsd:element minOccurs="0" name="fraudOffset" nillable="true" type="xsd:int" />
+          <xsd:element minOccurs="0" name="merchantAccount" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="orderReference" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="recurring" nillable="true" type="tns:Recurring" />
+          <xsd:element minOccurs="0" name="reference" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="selectedBrand" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="selectedRecurringDetailReference" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="sessionId" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="shopperEmail" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="shopperIP" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="shopperInteraction" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="shopperReference" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="shopperStatement" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="DirectDebitResponse">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="additionalData" nillable="true" type="tns:anyType2anyTypeMap" />
+          <xsd:element minOccurs="0" name="fraudResult" nillable="true" type="tns:FraudResult" />
+          <xsd:element minOccurs="0" name="pspReference" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="refusalReason" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="resultCode" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
+      <xsd:complexType name="ELV">
+        <xsd:sequence>
+          <xsd:element minOccurs="0" name="accountHolderName" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="bankAccountNumber" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="bankLocation" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="bankLocationId" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="bankName" nillable="true" type="xsd:string" />
+        </xsd:sequence>
+      </xsd:complexType>
       <xsd:complexType name="ForexQuote">
         <xsd:sequence>
           <xsd:element minOccurs="0" name="account" nillable="true" type="xsd:string" />
@@ -181,8 +213,8 @@
       <xsd:complexType name="FundTransferResult">
         <xsd:sequence>
           <xsd:element minOccurs="0" name="additionalData" nillable="true" type="tns:anyType2anyTypeMap" />
-          <xsd:element minOccurs="1" name="pspReference" type="xsd:string" />
-          <xsd:element minOccurs="1" name="response" type="xsd:string" />
+          <xsd:element minOccurs="0" name="pspReference" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="response" nillable="true" type="xsd:string" />
         </xsd:sequence>
       </xsd:complexType>
       <xsd:complexType name="ModificationRequest">
@@ -198,8 +230,8 @@
       <xsd:complexType name="ModificationResult">
         <xsd:sequence>
           <xsd:element minOccurs="0" name="additionalData" nillable="true" type="tns:anyType2anyTypeMap" />
-          <xsd:element minOccurs="1" name="pspReference" type="xsd:string" />
-          <xsd:element minOccurs="1" name="response" type="xsd:string" />
+          <xsd:element minOccurs="0" name="pspReference" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="response" nillable="true" type="xsd:string" />
         </xsd:sequence>
       </xsd:complexType>
       <xsd:complexType name="PaymentRequest">
@@ -208,20 +240,13 @@
           <xsd:element minOccurs="0" name="additionalData" nillable="true" type="tns:anyType2anyTypeMap" />
           <xsd:element minOccurs="0" name="amount" nillable="true" type="ns1:Amount" />
           <xsd:element minOccurs="0" name="bankAccount" nillable="true" type="tns:BankAccount" />
-          <xsd:element minOccurs="0" name="billingAddress" nillable="true" type="ns1:Address" />
           <xsd:element minOccurs="0" name="browserInfo" nillable="true" type="ns1:BrowserInfo" />
-          <xsd:element minOccurs="0" name="captureDelayHours" nillable="true" type="xsd:int" />
           <xsd:element minOccurs="0" name="card" nillable="true" type="tns:Card" />
-          <xsd:element minOccurs="0" name="dateOfBirth" nillable="true" type="xsd:dateTime" />
           <xsd:element minOccurs="0" name="dccQuote" nillable="true" type="tns:ForexQuote" />
           <xsd:element minOccurs="0" name="deliveryAddress" nillable="true" type="ns1:Address" />
-          <xsd:element minOccurs="0" name="deliveryDate" nillable="true" type="xsd:dateTime" />
-          <xsd:element minOccurs="0" name="deviceFingerprint" nillable="true" type="xsd:string" />
+          <xsd:element minOccurs="0" name="elv" nillable="true" type="tns:ELV" />
           <xsd:element minOccurs="0" name="fraudOffset" nillable="true" type="xsd:int" />
-          <xsd:element minOccurs="0" name="installments" nillable="true" type="ns1:Installments" />
-          <xsd:element minOccurs="0" name="mcc" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="merchantAccount" nillable="true" type="xsd:string" />
-          <xsd:element minOccurs="0" name="merchantOrderReference" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="mpiData" nillable="true" type="tns:ThreeDSecureData" />
           <xsd:element minOccurs="0" name="orderReference" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="recurring" nillable="true" type="tns:Recurring" />
@@ -232,12 +257,8 @@
           <xsd:element minOccurs="0" name="shopperEmail" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="shopperIP" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="shopperInteraction" nillable="true" type="xsd:string" />
-          <xsd:element minOccurs="0" name="shopperLocale" nillable="true" type="xsd:string" />
-          <xsd:element minOccurs="0" name="shopperName" nillable="true" type="ns1:Name" />
           <xsd:element minOccurs="0" name="shopperReference" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="shopperStatement" nillable="true" type="xsd:string" />
-          <xsd:element minOccurs="0" name="socialSecurityNumber" nillable="true" type="xsd:string" />
-          <xsd:element minOccurs="0" name="telephoneNumber" nillable="true" type="xsd:string" />
         </xsd:sequence>
       </xsd:complexType>
       <xsd:complexType name="PaymentRequest3d">
@@ -245,20 +266,12 @@
           <xsd:element minOccurs="0" name="additionalAmount" nillable="true" type="ns1:Amount" />
           <xsd:element minOccurs="0" name="additionalData" nillable="true" type="tns:anyType2anyTypeMap" />
           <xsd:element minOccurs="0" name="amount" nillable="true" type="ns1:Amount" />
-          <xsd:element minOccurs="0" name="billingAddress" nillable="true" type="ns1:Address" />
           <xsd:element minOccurs="0" name="browserInfo" nillable="true" type="ns1:BrowserInfo" />
-          <xsd:element minOccurs="0" name="captureDelayHours" nillable="true" type="xsd:int" />
-          <xsd:element minOccurs="0" name="dateOfBirth" nillable="true" type="xsd:dateTime" />
           <xsd:element minOccurs="0" name="dccQuote" nillable="true" type="tns:ForexQuote" />
           <xsd:element minOccurs="0" name="deliveryAddress" nillable="true" type="ns1:Address" />
-          <xsd:element minOccurs="0" name="deliveryDate" nillable="true" type="xsd:dateTime" />
-          <xsd:element minOccurs="0" name="deviceFingerprint" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="fraudOffset" nillable="true" type="xsd:int" />
-          <xsd:element minOccurs="0" name="installments" nillable="true" type="ns1:Installments" />
-          <xsd:element minOccurs="0" name="mcc" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="md" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="merchantAccount" nillable="true" type="xsd:string" />
-          <xsd:element minOccurs="0" name="merchantOrderReference" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="orderReference" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="paResponse" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="recurring" nillable="true" type="tns:Recurring" />
@@ -269,12 +282,8 @@
           <xsd:element minOccurs="0" name="shopperEmail" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="shopperIP" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="shopperInteraction" nillable="true" type="xsd:string" />
-          <xsd:element minOccurs="0" name="shopperLocale" nillable="true" type="xsd:string" />
-          <xsd:element minOccurs="0" name="shopperName" nillable="true" type="ns1:Name" />
           <xsd:element minOccurs="0" name="shopperReference" nillable="true" type="xsd:string" />
           <xsd:element minOccurs="0" name="shopperStatement" nillable="true" type="xsd:string" />
-          <xsd:element minOccurs="0" name="socialSecurityNumber" nillable="true" type="xsd:string" />
-          <xsd:element minOccurs="0" name="telephoneNumber" nillable="true" type="xsd:string" />
         </xsd:sequence>
       </xsd:complexType>
       <xsd:complexType name="PaymentResult">
@@ -438,6 +447,20 @@
           </xsd:sequence>
         </xsd:complexType>
       </xsd:element>
+      <xsd:element name="directdebit">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="request" nillable="true" type="tns:DirectDebitRequest" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
+      <xsd:element name="directdebitResponse">
+        <xsd:complexType>
+          <xsd:sequence>
+            <xsd:element minOccurs="1" maxOccurs="1" name="response" nillable="true" type="tns:DirectDebitResponse" />
+          </xsd:sequence>
+        </xsd:complexType>
+      </xsd:element>
       <xsd:element name="fundTransfer">
         <xsd:complexType>
           <xsd:sequence>
@@ -525,26 +548,6 @@
           </xsd:element>
         </xsd:sequence>
       </xsd:complexType>
-      <xsd:complexType name="Installments">
-        <xsd:sequence>
-          <xsd:element minOccurs="0" name="value" type="xsd:short" />
-        </xsd:sequence>
-      </xsd:complexType>
-      <xsd:complexType name="Name">
-        <xsd:sequence>
-          <xsd:element minOccurs="0" name="firstName" nillable="true" type="xsd:string" />
-          <xsd:element minOccurs="0" name="gender" nillable="true" type="ns1:Gender" />
-          <xsd:element minOccurs="0" name="infix" nillable="true" type="xsd:string" />
-          <xsd:element minOccurs="0" name="lastName" nillable="true" type="xsd:string" />
-        </xsd:sequence>
-      </xsd:complexType>
-      <xsd:simpleType name="Gender">
-        <xsd:restriction base="xsd:string">
-          <xsd:enumeration value="MALE" />
-          <xsd:enumeration value="FEMALE" />
-          <xsd:enumeration value="UNKNOWN" />
-        </xsd:restriction>
-      </xsd:simpleType>
       <xsd:complexType name="ServiceException">
         <xsd:sequence>
           <xsd:element minOccurs="0" name="error" nillable="true" type="ns1:Error" />
@@ -625,6 +628,12 @@
   <wsdl:message name="checkFraudResponse">
     <wsdl:part name="parameters" element="tns:checkFraudResponse" />
   </wsdl:message>
+  <wsdl:message name="directdebitRequest">
+    <wsdl:part name="parameters" element="tns:directdebit" />
+  </wsdl:message>
+  <wsdl:message name="directdebitResponse">
+    <wsdl:part name="parameters" element="tns:directdebitResponse" />
+  </wsdl:message>
   <wsdl:message name="fundTransferRequest">
     <wsdl:part name="parameters" element="tns:fundTransfer" />
   </wsdl:message>
@@ -682,6 +691,11 @@
     <wsdl:operation name="checkFraud">
       <wsdl:input name="checkFraudRequest" message="tns:checkFraudRequest" />
       <wsdl:output name="checkFraudResponse" message="tns:checkFraudResponse" />
+      <wsdl:fault name="ServiceException" message="tns:ServiceException" />
+    </wsdl:operation>
+    <wsdl:operation name="directdebit">
+      <wsdl:input name="directdebitRequest" message="tns:directdebitRequest" />
+      <wsdl:output name="directdebitResponse" message="tns:directdebitResponse" />
       <wsdl:fault name="ServiceException" message="tns:ServiceException" />
     </wsdl:operation>
     <wsdl:operation name="fundTransfer">
@@ -798,6 +812,18 @@
         <wsdlsoap:fault use="literal" name="ServiceException" namespace="" />
       </wsdl:fault>
     </wsdl:operation>
+    <wsdl:operation name="directdebit">
+      <wsdlsoap:operation soapAction="" />
+      <wsdl:input name="directdebitRequest">
+        <wsdlsoap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="directdebitResponse">
+        <wsdlsoap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="ServiceException">
+        <wsdlsoap:fault use="literal" name="ServiceException" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
     <wsdl:operation name="fundTransfer">
       <wsdlsoap:operation soapAction="" />
       <wsdl:input name="fundTransferRequest">
@@ -837,7 +863,7 @@
   </wsdl:binding>
   <wsdl:service name="Payment">
     <wsdl:port name="PaymentHttpPort" binding="tns:PaymentHttpBinding">
-      <wsdlsoap:address location="https://pal-test.adyen.com/pal/servlet/Payment/v12" />
+      <wsdlsoap:address location="https://pal-test.adyen.com/pal/servlet/soap/Payment" />
     </wsdl:port>
   </wsdl:service>
 </wsdl:definitions>
