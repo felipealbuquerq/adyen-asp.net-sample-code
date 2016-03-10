@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="f3a493c5-6b7c-450f-9306-38a4ab2e45ca" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="e924ee7c-ee9a-4b08-9a36-be3062c8c4e4" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
   <ClientOptions>
     <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
     <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
@@ -19,10 +19,10 @@
     <ServiceContractMappings />
   </ClientOptions>
   <MetadataSources>
-    <MetadataSource Address="https://pal-test.adyen.com/pal/servlet/Payment/v12?wsdl" Protocol="http" SourceId="1" />
+    <MetadataSource Address="https://pal-test.adyen.com/pal/servlet/soap/Payment?wsdl" Protocol="http" SourceId="1" />
   </MetadataSources>
   <Metadata>
-    <MetadataFile FileName="v12.wsdl" MetadataType="Wsdl" ID="ec737f56-15f3-4628-a3c1-61e7fc566237" SourceId="1" SourceUrl="https://pal-test.adyen.com/pal/servlet/Payment/v12?wsdl" />
+    <MetadataFile FileName="Payment.wsdl" MetadataType="Wsdl" ID="5d668574-fae9-4c0d-a5fe-e9a9727922b9" SourceId="1" SourceUrl="https://pal-test.adyen.com/pal/servlet/soap/Payment?wsdl" />
   </Metadata>
   <Extensions>
     <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />

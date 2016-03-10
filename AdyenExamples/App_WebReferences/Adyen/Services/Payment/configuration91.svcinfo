@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="a6hx6UL7HooA5A6bfj0i/Sud5ts=">
+<SavedWcfConfigurationInformation xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" Version="9.1" CheckSum="SA9928nNKfYmYznq9h0ch0U3i7A=">
   <bindingConfigurations>
     <bindingConfiguration bindingType="basicHttpBinding" name="PaymentHttpBinding">
       <properties>
@@ -221,10 +221,10 @@
     </bindingConfiguration>
   </bindingConfigurations>
   <endpoints>
-    <endpoint name="PaymentHttpPort" contract="Adyen.Services.Payment.PaymentPortType" bindingType="basicHttpBinding" address="https://pal-test.adyen.com/pal/servlet/Payment/v12" bindingConfiguration="PaymentHttpBinding">
+    <endpoint name="PaymentHttpPort" contract="Adyen.Services.Payment.PaymentPortType" bindingType="basicHttpBinding" address="https://pal-test.adyen.com/pal/servlet/soap/Payment" bindingConfiguration="PaymentHttpBinding">
       <properties>
         <property path="/address" isComplexType="false" isExplicitlyDefined="true" clrType="System.Uri, System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
-          <serializedValue>https://pal-test.adyen.com/pal/servlet/Payment/v12</serializedValue>
+          <serializedValue>https://pal-test.adyen.com/pal/servlet/soap/Payment</serializedValue>
         </property>
         <property path="/behaviorConfiguration" isComplexType="false" isExplicitlyDefined="false" clrType="System.String, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
           <serializedValue />
