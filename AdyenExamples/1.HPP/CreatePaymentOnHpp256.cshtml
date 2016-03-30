@@ -73,9 +73,7 @@
      * The merchant signature is used by Adyen to verify if the posted data is not altered by the shopper. The
      * signature must be encrypted according to the procedure below.
      *
-     * Please note: the signature does contain more variables, in this example they are NOT required since they are
-     * empty. Please have a look at the advanced HPP example for a comprehensive overview on what should be part of
-     * the signature.
+     * Please note: You will need to add all parameters that you post to this list in order for the signature to be correct.
      */
     Dictionary<string, string> paramlist = new Dictionary<string, string>();
 
@@ -87,6 +85,12 @@
 	paramlist.Add("shipBeforeDate", shipBeforeDate);
 	paramlist.Add("shopperLocale", shopperLocale);
 	paramlist.Add("skinCode", skinCode);
+	paramlist.Add("countryCode", countryCode);
+	paramlist.Add("shopperEmail", shopperEmail);
+	paramlist.Add("shopperReference", shopperReference);
+	paramlist.Add("allowedMethods", allowedMethods);
+	paramlist.Add("blockedMethods", blockedMethods);
+	paramlist.Add("offset", offset);
     
     //add custom data as JSON in the orderData field
     List<CustomField> list = new List<CustomField>();   
