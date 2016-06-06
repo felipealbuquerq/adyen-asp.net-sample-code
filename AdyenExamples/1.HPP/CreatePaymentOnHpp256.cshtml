@@ -59,6 +59,7 @@
     string merchantAccount = "YourMerchantAccount";
     string sessionValidity = DateTime.Now.AddDays(1).ToString("yyyy-MM-ddTHH:mm:ssK");
     string shopperLocale = "en_US";
+    string orderData = CompressString("Orderdata to display on the HPP can be put here");
     string countryCode = "NL";
     string shopperEmail = "";
     string shopperReference = "";
@@ -216,6 +217,7 @@
         <input type="hidden" name="allowedMethods" value="@allowedMethods">
         <input type="hidden" name="blockedMethods" value="@blockedMethods">
         <input type="hidden" name="offset" value="@offset">
+        <input type="hidden" name="orderData" value="@orderData">
         <input type="hidden" name="merchantSig" value="@merchantSig">
         <input type="submit" value="Create payment">
     </form>
