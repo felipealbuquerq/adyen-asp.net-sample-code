@@ -1,6 +1,7 @@
-﻿@using System.IO.Compression
+@using System.IO.Compression
 @using System.Security.Cryptography;
 @using System.Text
+@using System.Web.Helpers;
 
 
 @*
@@ -11,7 +12,7 @@
     *
     * @link /1.HPP/CreatePaymentOnHpp.cshtml
     * @author Created by Adyen - Payments Made Easy
-    
+
 *@
 @{
     /**
@@ -42,7 +43,6 @@
      *                        Format: YYYY-MM-DDThh:mm:ssTZD
      * shopperLocale        : A combination of language code and country code used to specify the language to be
      *                        used in the payment session (e.g. en_GB).
-     * orderData            : A fragment of HTML/text that will be displayed on the HPP. (optional)
      * countryCode          : Country code according to ISO_3166-1_alpha-2 standard. (optional)
      * shopperEmail         : The shopper's email address. (recommended)
      * shopperReference     : An ID that uniquely identifes the shopper, such as a customer id. (recommended)
@@ -59,7 +59,6 @@
     string merchantAccount = "YourMerchantAccount";
     string sessionValidity = DateTime.Now.AddDays(1).ToString("yyyy-MM-ddTHH:mm:ssK");
     string shopperLocale = "en_US";
-    string orderData = CompressString("Orderdata to display on the HPP can be put here");
     string countryCode = "NL";
     string shopperEmail = "";
     string shopperReference = "";
@@ -77,42 +76,20 @@
      */
     Dictionary<string, string> paramlist = new Dictionary<string, string>();
 
-	paramlist.Add("currencyCode", currencyCode);
-	paramlist.Add("merchantAccount", merchantAccount);
-	paramlist.Add("merchantReference", merchantReference);	
-	paramlist.Add("paymentAmount", paymentAmount);
-	paramlist.Add("sessionValidity", sessionValidity);
-	paramlist.Add("shipBeforeDate", shipBeforeDate);
-	paramlist.Add("shopperLocale", shopperLocale);
-	paramlist.Add("skinCode", skinCode);
-	paramlist.Add("countryCode", countryCode);
-	paramlist.Add("shopperEmail", shopperEmail);
-	paramlist.Add("shopperReference", shopperReference);
-	paramlist.Add("allowedMethods", allowedMethods);
-	paramlist.Add("blockedMethods", blockedMethods);
-	paramlist.Add("offset", offset);
-    
-    //add custom data as JSON in the orderData field
-    List<CustomField> list = new List<CustomField>();   
-    list.Add(new CustomField("myVal1", "FOO"));
-    list.Add(new CustomField("myVal2", "BAR"));   
-
-    JsonEncoder encoder = new JsonEncoder(list);
-    var custom = encoder.GetJson();
-    paramlist.Add("orderData", custom);
-
-    /*
-     * In your skin add elements with id's equal to the names of the custom fields. for instance
-     * <span id="myVal1"></span>
-     * To decode the data in your skin JS do this:
-     *  var orderDataString = decodeURIComponent($("[name='orderData']").val());
-        var orderJson = $.parseJSON(orderDataString);      
-        $.each(orderJson, function (index, obj) {	              
-            if ($("#" + obj.Name) != undefined && obj.Value != undefined && obj.Value !== '') {
-                $("#" + obj.Name).html(obj.Value.replace("+", " ").replace("++"," "));  //this decodes spaces, you should do something more clever here!!
-            }
-        });
-     */
+    paramlist.Add("currencyCode", currencyCode);
+    paramlist.Add("merchantAccount", merchantAccount);
+    paramlist.Add("merchantReference", merchantReference);
+    paramlist.Add("paymentAmount", paymentAmount);
+    paramlist.Add("sessionValidity", sessionValidity);
+    paramlist.Add("shipBeforeDate", shipBeforeDate);
+    paramlist.Add("shopperLocale", shopperLocale);
+    paramlist.Add("skinCode", skinCode);
+    paramlist.Add("countryCode", countryCode);
+    paramlist.Add("shopperEmail", shopperEmail);
+    paramlist.Add("shopperReference", shopperReference);
+    paramlist.Add("allowedMethods", allowedMethods);
+    paramlist.Add("blockedMethods", blockedMethods);
+    paramlist.Add("offset", offset);
 
     string signingString = BuildSigningString(paramlist);
     string merchantSig = CalculateHMAC(hmacKey, signingString);
@@ -135,65 +112,70 @@
             }
         }
     }
-	
-	static string EscapeVal(string val)
-	{
-		if (val == null)
-		{
-			return string.Empty;
-		}
 
-		val = val.Replace(@"\", @"\\");
-		val = val.Replace(":", @"\:");
-		return val; 
-	}
+    static string EscapeVal(string val)
+    {
+        if (val == null)
+        {
+            return string.Empty;
+        }
 
-	static string BuildSigningString(IDictionary<string, string> dict)
-	{
-		Dictionary<string, string> signDict = dict.OrderBy(d => d.Key).ToDictionary(pair => pair.Key, pair => pair.Value);
-		string keystring = string.Join(":", signDict.Keys);
-		string valuestring = string.Join(":", signDict.Values.Select(EscapeVal));
-		return string.Format("{0}:{1}", keystring, valuestring);
-	}
+        val = val.Replace(@"\", @"\\");
+        val = val.Replace(":", @"\:");
+        return val;
+    }
 
-     // Computes the Base64 encoded signature using the HMAC algorithm with the HMACSHA256 hashing function.
-  	string CalculateHMAC(string hmacKey, string signingstring)
-	{
-		byte[] key = PackH(hmacKey);
-		byte[] data = Encoding.UTF8.GetBytes(signingstring);
+    static string BuildSigningString(IDictionary<string, string> dict)
+    {
+        //Dictionary<string, string> signDict = dict.Where(x => x.Value != "").OrderBy(d => d.Key).ToDictionary(pair => pair.Key, pair => pair.Value);
 
-		try
-		{
-			using (HMACSHA256 hmac = new HMACSHA256(key))
-			{
-				// Compute the hmac on input data bytes
-				byte[] rawHmac = hmac.ComputeHash(data);
+        Dictionary<string, string> signDict = dict.OrderBy(d => d.Key).ToDictionary(pair => pair.Key, pair => pair.Value);
 
-				// Base64-encode the hmac
-				return Convert.ToBase64String(rawHmac);
-			}
-		}
-		catch (Exception e)
-		{
-			throw new Exception("Failed to generate HMAC : " + e.Message);
-		}
-	}
+        string keystring = string.Join(":", signDict.Keys);
+        string valuestring = string.Join(":", signDict.Values.Select(EscapeVal));
 
-	byte[] PackH(string hex)
-	{
-		if ((hex.Length % 2) == 1)
-		{
-			hex += '0';
-		}
 
-		byte[] bytes = new byte[hex.Length / 2];
-		for (int i = 0; i < hex.Length; i += 2)
-		{
-			bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
-		}
+        return string.Format("{0}:{1}", keystring, valuestring);
+    }
 
-		return bytes;
-	}
+    // Computes the Base64 encoded signature using the HMAC algorithm with the HMACSHA256 hashing function.
+    string CalculateHMAC(string hmacKey, string signingstring)
+    {
+        byte[] key = PackH(hmacKey);
+        byte[] data = Encoding.UTF8.GetBytes(signingstring);
+
+        try
+        {
+            using (HMACSHA256 hmac = new HMACSHA256(key))
+            {
+                // Compute the hmac on input data bytes
+                byte[] rawHmac = hmac.ComputeHash(data);
+
+                // Base64-encode the hmac
+                return Convert.ToBase64String(rawHmac);
+            }
+        }
+        catch (Exception e)
+        {
+            throw new Exception("Failed to generate HMAC : " + e.Message);
+        }
+    }
+
+    byte[] PackH(string hex)
+    {
+        if ((hex.Length % 2) == 1)
+        {
+            hex += '0';
+        }
+
+        byte[] bytes = new byte[hex.Length / 2];
+        for (int i = 0; i < hex.Length; i += 2)
+        {
+            bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+        }
+
+        return bytes;
+    }
 }
 <!DOCTYPE html>
 <html>
@@ -217,7 +199,6 @@
         <input type="hidden" name="allowedMethods" value="@allowedMethods">
         <input type="hidden" name="blockedMethods" value="@blockedMethods">
         <input type="hidden" name="offset" value="@offset">
-        <input type="hidden" name="orderData" value="@orderData">
         <input type="hidden" name="merchantSig" value="@merchantSig">
         <input type="submit" value="Create payment">
     </form>
