@@ -1,0 +1,138 @@
+@using System.IO.Compression
+@using System.Security.Cryptography
+@using System.Text
+
+@*
+    * HPP payment response url
+    *
+    * Whenever a payment is made, the shopper is redirected either to a default
+    * or custom result page. Parameters are appended to this url to provide
+    * a status and general information about the payment.
+    *
+    * @link /1.HPP/CheckPaymentResponseSha256.cshtml
+    * @author Created by Adyen - Payments Made Easy
+*@
+@{
+    /**
+     * We recommend you to check the consistency of the URL parameters to ensure
+     * that the data has not been tampered with, especially when you show
+     * customer/order specific information on the result page, or make updates
+     * to a back office system based on this data.
+     * For this purpose, an HMAC is added to the query string parameters and can be
+     * used to verify the data. The HMAC key which is set on the skin (used for
+     * the initial payment request) is also used for the calculation of this result
+     * URL parameter.
+     */
+    string hmacKey = "YourHmacSecretKey";
+
+    /**
+     * Extract the merchant signature and compare it with the one calculated based on the URL parameters
+     */
+
+    // Get and store all the URL parameters
+    Dictionary<string, string> paramList = Request.QueryString.AllKeys.ToDictionary(k => k, k => Request.QueryString[k]);
+
+    // Retrieve the merchantSig from the URL parameters
+    string originalMerchantSig = paramList["merchantSig"];
+
+    // Remove the merchantSig field for the signature calculation
+    paramList.Remove("merchantSig");
+
+    // Generate the signing data string
+    string signingString = BuildSigningString(paramList);
+
+    // Calculate the resulting signature using HMAC
+    string calculatedMerchantSig = CalculateHMAC(hmacKey, signingString);
+
+    // Compare the calculated signature with the signature from the URL parameters
+    if (calculatedMerchantSig.Equals(originalMerchantSig))
+    {
+        <text>Correct merchant signature</text>
+    }
+    else
+    {
+        <text>Incorrect merchant signature</text>
+    }
+}
+
+@functions {
+    // Generates GZIP compressed and Base64 encoded string.
+    string CompressString(string input)
+    {
+        byte[] buffer = Encoding.UTF8.GetBytes(input);
+
+        using (var output = new MemoryStream())
+        {
+            using (var gzip = new GZipStream(output, CompressionMode.Compress))
+            {
+                gzip.Write(buffer, 0, buffer.Length);
+                gzip.Close();
+                return Convert.ToBase64String(output.ToArray());
+            }
+        }
+    }
+
+    static string EscapeVal(string val)
+    {
+        if (val == null)
+        {
+            return string.Empty;
+        }
+
+        val = val.Replace(@"\", @"\\");
+        val = val.Replace(":", @"\:");
+        return val;
+    }
+
+    static string BuildSigningString(IDictionary<string, string> dict)
+    {
+        //Dictionary<string, string> signDict = dict.Where(x => x.Value != "").OrderBy(d => d.Key).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+        Dictionary<string, string> signDict = dict.OrderBy(d => d.Key).ToDictionary(pair => pair.Key, pair => pair.Value);
+
+        string keystring = string.Join(":", signDict.Keys);
+        string valuestring = string.Join(":", signDict.Values.Select(EscapeVal));
+
+
+        return string.Format("{0}:{1}", keystring, valuestring);
+    }
+
+    // Computes the Base64 encoded signature using the HMAC algorithm with the HMACSHA256 hashing function.
+    string CalculateHMAC(string hmacKey, string signingstring)
+    {
+        byte[] key = PackH(hmacKey);
+        byte[] data = Encoding.UTF8.GetBytes(signingstring);
+
+        try
+        {
+            using (HMACSHA256 hmac = new HMACSHA256(key))
+            {
+                // Compute the hmac on input data bytes
+                byte[] rawHmac = hmac.ComputeHash(data);
+
+                // Base64-encode the hmac
+                return Convert.ToBase64String(rawHmac);
+            }
+        }
+        catch (Exception e)
+        {
+            throw new Exception("Failed to generate HMAC : " + e.Message);
+        }
+    }
+
+    byte[] PackH(string hex)
+    {
+        if ((hex.Length % 2) == 1)
+        {
+            hex += '0';
+        }
+
+        byte[] bytes = new byte[hex.Length / 2];
+        for (int i = 0; i < hex.Length; i += 2)
+        {
+            bytes[i / 2] = Convert.ToByte(hex.Substring(i, 2), 16);
+        }
+
+        return bytes;
+    }
+}
