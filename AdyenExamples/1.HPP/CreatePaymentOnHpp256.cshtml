@@ -58,6 +58,7 @@
     string merchantAccount = "YourMerchantAccount";
     string sessionValidity = DateTime.Now.AddDays(1).ToString("yyyy-MM-ddTHH:mm:ssK");
     string shopperLocale = "en_US";
+    string orderData = CompressString("Orderdata to display on the HPP can be put here");
     string countryCode = "NL";
     string shopperEmail = "";
     string shopperReference = "";
@@ -82,6 +83,7 @@
     paramlist.Add("sessionValidity", sessionValidity);
     paramlist.Add("shipBeforeDate", shipBeforeDate);
     paramlist.Add("shopperLocale", shopperLocale);
+    paramlist.Add("orderData", orderData);
     paramlist.Add("skinCode", skinCode);
     paramlist.Add("countryCode", countryCode);
     paramlist.Add("shopperEmail", shopperEmail);
@@ -192,6 +194,7 @@
         <input type="hidden" name="merchantAccount" value="@merchantAccount">
         <input type="hidden" name="sessionValidity" value="@sessionValidity">
         <input type="hidden" name="shopperLocale" value="@shopperLocale">
+        <input type="hidden" name="orderData" value="@orderData">
         <input type="hidden" name="countryCode" value="@countryCode">
         <input type="hidden" name="shopperEmail" value="@shopperEmail">
         <input type="hidden" name="shopperReference" value="@shopperReference">
