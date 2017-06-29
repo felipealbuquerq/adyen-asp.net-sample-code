@@ -10,9 +10,6 @@ The code examples in this repository help you integrate with the Adyen platform 
   - CreatePaymentOnHppAdvanced     : Advanced form creating a payment on our HPP
   - CreatePaymentUrl               : Create payment URL on our HPP
 2.API
-  - HttpPost
-    - CreatePaymentAPI             : Create a payment via our API using HTTP Post
-    - CreatePaymentCSE             : Create a Client-Side Encrypted payment using HTTP Post
   - Soap
     - CreatePaymentAPI             : Create a payment via our API using SOAP
     - CreatePaymentCSE             : Create a Client-Side Encrypted payment using SOAP
@@ -20,21 +17,12 @@ The code examples in this repository help you integrate with the Adyen platform 
   - HttpPost
     - NotificationServer           : Receive our notifications using HTTP Post
 4.Modifications
-  - HttpPost
-    - CancelOrRefundPayment        : Cancel or refund a payment using HTTP Post
-    - CancelPayment                : Cancel a payment using HTTP Post
-    - CapturePayment               : Capture a payment using HTTP Post
-    - RefundPayment                : Request a refund using HTTP Post
   - Soap
     - CancelOrRefundPayment        : Cancel or refund a payment using SOAP
     - CancelPayment                : Cancel a payment using SOAP
     - CapturePayment               : Capture a payment using SOAP
     - RefundPayment                : Request a refund using SOAP
 5.Recurring
-  - HttpPost
-    - CreateRecurringPayment       : Create a recurring payment using HTTP Post
-    - DisableRecurringContract     : Disable a recurring contract using HTTP Post
-    - RetrieveRecurringContract    : Retrieve a recurring contract using HTTP Post
   - Soap
     - CreateRecurringPayment       : Create a recurring payment using SOAP
     - DisableRecurringContract     : Disable a recurring contract using SOAP
